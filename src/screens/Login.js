@@ -2,78 +2,114 @@ import {
   JosefinSans_400Regular,
   useFonts,
 } from "@expo-google-fonts/josefin-sans";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Alert,
+} from "react-native";
 import logo from "../assets/logo-without-bg.png";
 import { TextInput } from "react-native-paper";
 import { useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
-import { Link } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const navigation = useNavigation();
   const [fontsLoaded] = useFonts({
     JosefinSans_400Regular,
   });
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert("Erro", "Preencha todos os campos!");
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:8080/login", {
+        email,
+        password,
+      });
+
+      const token = response.data.token;
+
+      await AsyncStorage.setItem("authToken", token);
+      console.log("Token salvo com sucesso:", token);
+
+      navigation.navigate("Home");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          Alert.alert("Erro", "Credenciais inválidas!");
+        } else {
+          Alert.alert("Erro", "Erro ao realizar login.");
+        }
+      } else {
+        Alert.alert("Erro", "Erro inesperado.");
+      }
+      console.error("Erro no login:", error);
+    }
+  };
 
   if (!fontsLoaded) {
     return null;
   }
 
   return (
-    <>
-      <View style={styles.container}>
-        <View style={styles.firstHalf}>
-          <Text style={styles.title}>Login</Text>
-        </View>
-        <View style={styles.secondHalf}>
-          <Image style={styles.styleImage} source={logo} />
-          <View style={{ width: "100%", alignItems: "center", gap: 20 }}>
-            <TextInput
-              mode="outlined"
-              label="Email"
-              value={email}
-              onChangeText={setEmail}
-              style={styles.input}
-              activeOutlineColor="#004AAB"
-              placeholder="Digite seu email cadastrado"
-              left
-            />
-            <TextInput
-              mode="outlined"
-              label="Senha"
-              value={password}
-              onChangeText={setPassword}
-              style={styles.input}
-              activeOutlineColor="#004AAB"
-              placeholder="Digite sua senha"
-              secureTextEntry={!showPassword}
-              right={
-                <TextInput.Icon
-                  icon={showPassword ? "eye-off" : "eye"}
-                  onPress={() => setShowPassword(!showPassword)}
-                />
-              }
-            />
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Enviar</Text>
-            </TouchableOpacity>
-            <Text style={{ color: "#000", fontSize: 16 }}>
-              Não possui uma conta?{" "}
-              <Text
-                style={{ color: "#004AAB", fontWeight: "bold" }}
-                onPress={() => {
-                  console.log("Clicou em Cadastre-se Já");
-                }}
-              >
-                Cadastre-se Já
-              </Text>
+    <View style={styles.container}>
+      <View style={styles.firstHalf}>
+        <Text style={styles.title}>Login</Text>
+      </View>
+      <View style={styles.secondHalf}>
+        <Image style={styles.styleImage} source={logo} />
+        <View style={{ width: "100%", alignItems: "center", gap: 20 }}>
+          <TextInput
+            mode="outlined"
+            label="Email"
+            value={email}
+            onChangeText={setEmail}
+            style={styles.input}
+            activeOutlineColor="#004AAB"
+            placeholder="Digite seu email cadastrado"
+          />
+          <TextInput
+            mode="outlined"
+            label="Senha"
+            value={password}
+            onChangeText={setPassword}
+            style={styles.input}
+            activeOutlineColor="#004AAB"
+            placeholder="Digite sua senha"
+            secureTextEntry={!showPassword}
+            right={
+              <TextInput.Icon
+                icon={showPassword ? "eye-off" : "eye"}
+                onPress={() => setShowPassword(!showPassword)}
+              />
+            }
+          />
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <Text style={styles.buttonText}>Enviar</Text>
+          </TouchableOpacity>
+          <Text style={{ color: "#000", fontSize: 16 }}>
+            Não possui uma conta?{" "}
+            <Text
+              style={{ color: "#004AAB", fontWeight: "bold" }}
+              onPress={() => navigation.navigate("Cadastro")}
+            >
+              Cadastre-se Já
             </Text>
-          </View>
+          </Text>
         </View>
       </View>
-    </>
+    </View>
   );
 }
 
