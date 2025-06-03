@@ -27,6 +27,7 @@ export default function Login() {
   });
 
   const handleLogin = async () => {
+    navigation.navigate("Drawer");
     if (!email || !password) {
       Alert.alert("Erro", "Preencha todos os campos!");
       return;
@@ -102,7 +103,7 @@ export default function Login() {
             Não possui uma conta?{" "}
             <Text
               style={{ color: "#004AAB", fontWeight: "bold" }}
-              onPress={() => navigation.navigate("Cadastro")}
+              onPress={() => navigation.navigate("SignUp")}
             >
               Cadastre-se Já
             </Text>

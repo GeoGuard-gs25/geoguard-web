@@ -106,12 +106,12 @@ export default function SignUp() {
               <Text style={styles.buttonText}>Enviar</Text>
             </TouchableOpacity>
             <Text style={{ color: "#000", fontSize: 16 }}>
-              Não possui uma conta?{" "}
+              Já possui uma conta?{" "}
               <Text
                 style={{ color: "#004AAB", fontWeight: "bold" }}
-                onPress={() => navigation.navigate("Cadastro")}
+                onPress={() => navigation.navigate("Login")}
               >
-                Cadastre-se Já
+                Entre já
               </Text>
             </Text>
           </View>
