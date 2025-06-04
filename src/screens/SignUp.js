@@ -8,6 +8,8 @@ import { TextInput } from "react-native-paper";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Alert } from "react-native";
+import axios from "axios";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -15,6 +17,7 @@ export default function SignUp() {
   const [name, setName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
   const [fontsLoaded] = useFonts({
     JosefinSans_400Regular,
   });
@@ -25,12 +28,14 @@ export default function SignUp() {
       return;
     }
 
+    setLoading(true);
     try {
-      const response = await axios.post("http://localhost:8080/users", {
+      const response = await axios.post("http://192.168.0.14:8080/users", {
         name,
         email,
         password,
       });
+      console.log("PAssou");
 
       const token = response.data.token;
 
@@ -38,8 +43,10 @@ export default function SignUp() {
       console.log("Token salvo com sucesso:", token);
 
       Alert.alert("Sucesso", "Usuário criado com sucesso!");
-      navigation.navigate("Home");
+      navigation.navigate("Drawer");
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 400) {
           Alert.alert("Erro", "Dados inválidos ou usuário já existe.");
@@ -102,8 +109,10 @@ export default function SignUp() {
                 />
               }
             />
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Enviar</Text>
+            <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+              <Text style={styles.buttonText}>
+                {loading ? "Carregando..." : "Cadastrar"}
+              </Text>
             </TouchableOpacity>
             <Text style={{ color: "#000", fontSize: 16 }}>
               Já possui uma conta?{" "}

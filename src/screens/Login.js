@@ -22,19 +22,20 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
   const [fontsLoaded] = useFonts({
     JosefinSans_400Regular,
   });
 
   const handleLogin = async () => {
-    navigation.navigate("Drawer");
     if (!email || !password) {
       Alert.alert("Erro", "Preencha todos os campos!");
       return;
     }
 
     try {
-      const response = await axios.post("http://localhost:8080/login", {
+      setLoading(true);
+      const response = await axios.post("http://192.168.0.14:8080/login", {
         email,
         password,
       });
@@ -42,10 +43,11 @@ export default function Login() {
       const token = response.data.token;
 
       await AsyncStorage.setItem("authToken", token);
-      console.log("Token salvo com sucesso:", token);
 
-      navigation.navigate("Home");
+      navigation.navigate("Drawer");
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
           Alert.alert("Erro", "Credenciais inválidas!");
@@ -97,7 +99,9 @@ export default function Login() {
             }
           />
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
-            <Text style={styles.buttonText}>Enviar</Text>
+            <Text style={styles.buttonText}>
+              {loading ? "Carregando..." : "Enviar"}
+            </Text>
           </TouchableOpacity>
           <Text style={{ color: "#000", fontSize: 16 }}>
             Não possui uma conta?{" "}
