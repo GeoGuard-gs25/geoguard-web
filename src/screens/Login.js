@@ -12,12 +12,12 @@ import {
 } from "react-native";
 import logo from "../assets/logo-without-bg.png";
 import { TextInput } from "react-native-paper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default async function Login() {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -26,10 +26,17 @@ export default async function Login() {
   const [fontsLoaded] = useFonts({
     JosefinSans_400Regular,
   });
-  const token = await AsyncStorage.getItem("authToken");
-  if (token) {
-    navigation.navigate("Drawer");
-  }
+
+  const checkToken = async () => {
+    const token = await AsyncStorage.getItem("authToken");
+    if (token) {
+      navigation.navigate("Drawer");
+    }
+  };
+
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   const handleLogin = async () => {
     if (!email || !password) {

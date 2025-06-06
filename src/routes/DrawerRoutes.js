@@ -5,6 +5,7 @@ import { Image, StyleSheet } from "react-native";
 import logoIcon from "../assets/icon-logo.png";
 import Notification from "../screens/Notification";
 import Controls from "../screens/Controls";
+import LogoutScreen from "../screens/Logout";
 
 const Drawer = createDrawerNavigator();
 
@@ -57,6 +58,16 @@ export default function DrawerRoutes() {
             <Ionicons name="options" size={20} color={color} />
           ),
           drawerLabel: "Controles",
+        }}
+      />
+      <Drawer.Screen
+        name="Logout"
+        component={LogoutScreen}
+        options={{
+          drawerIcon: ({ color }) => (
+            <Ionicons name="log-out-outline" size={20} color={color} />
+          ),
+          drawerLabel: "Sair",
         }}
       />
     </Drawer.Navigator>
