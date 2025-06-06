@@ -35,12 +35,11 @@ export default function SignUp() {
         email,
         password,
       });
-      console.log("PAssou");
 
       const token = response.data.token;
 
       await AsyncStorage.setItem("authToken", token);
-      console.log("Token salvo com sucesso:", token);
+      console.log("Token salvo com sucesso:");
 
       Alert.alert("Sucesso", "Usuário criado com sucesso!");
       navigation.navigate("Drawer");
