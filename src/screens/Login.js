@@ -39,6 +39,7 @@ export default function Login() {
   }, []);
 
   const handleLogin = async () => {
+    navigation.navigate("Drawer");
     if (!email || !password) {
       Alert.alert("Erro", "Preencha todos os campos!");
       return;

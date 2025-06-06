@@ -6,6 +6,7 @@ import logoIcon from "../assets/icon-logo.png";
 import Notification from "../screens/Notification";
 import Controls from "../screens/Controls";
 import LogoutScreen from "../screens/Logout";
+import Reports from "../screens/Reports";
 
 const Drawer = createDrawerNavigator();
 
@@ -58,6 +59,16 @@ export default function DrawerRoutes() {
             <Ionicons name="options" size={20} color={color} />
           ),
           drawerLabel: "Controles",
+        }}
+      />
+      <Drawer.Screen
+        name="Reports"
+        component={Reports}
+        options={{
+          drawerIcon: ({ color }) => (
+            <Ionicons name="stats-chart" size={20} color={color} />
+          ),
+          drawerLabel: "Relatórios",
         }}
       />
       <Drawer.Screen
