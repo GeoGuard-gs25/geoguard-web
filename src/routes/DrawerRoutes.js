@@ -7,6 +7,7 @@ import Notification from "../screens/Notification";
 import Controls from "../screens/Controls";
 import LogoutScreen from "../screens/Logout";
 import Reports from "../screens/Reports";
+import About from "../screens/About";
 
 const Drawer = createDrawerNavigator();
 
@@ -69,6 +70,16 @@ export default function DrawerRoutes() {
             <Ionicons name="stats-chart" size={20} color={color} />
           ),
           drawerLabel: "Relatórios",
+        }}
+      />
+      <Drawer.Screen
+        name="About"
+        component={About}
+        options={{
+          drawerIcon: ({ color }) => (
+            <Ionicons name="person-circle" size={20} color={color} />
+          ),
+          drawerLabel: "Sobre Nós",
         }}
       />
       <Drawer.Screen
