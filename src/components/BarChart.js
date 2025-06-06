@@ -20,6 +20,7 @@ export default function Graph({ city, data, loading, error }) {
             textAlign: "center",
             fontSize: 16,
             marginVertical: 20,
+            marginHorizontal: 10,
             color: "#666",
             fontFamily: "JosefinSans_400Regular",
           }}

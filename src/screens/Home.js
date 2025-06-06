@@ -1,16 +1,19 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import Graph from "../components/BarChart";
-import { Button, IconButton, TextInput } from "react-native-paper";
+import { IconButton, TextInput } from "react-native-paper";
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import axios from "axios"; // <-- lembre-se de importar o axios
+import axios from "axios";
+import { stylesHome } from "../styles/stylesHome";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Home() {
   const [city, setCity] = useState("");
   const [dadosChuva, setDadosChuva] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setErro] = useState("");
-  const [temperatura, setTemperatura] = useState(null); // <-- novo estado
+  const [temperatura, setTemperatura] = useState(null);
+  const navigation = useNavigation();
 
   async function buscarDados() {
     try {
@@ -33,14 +36,12 @@ export default function Home() {
 
       const { latitude, longitude, timezone } = geoData.results[0];
 
-      // Calcular intervalo de datas
       const hoje = new Date();
       const fim = hoje.toISOString().split("T")[0];
       const inicio = new Date();
       inicio.setDate(hoje.getDate() - 6);
       const inicioStr = inicio.toISOString().split("T")[0];
 
-      // Buscar dados históricos de chuva
       const climaResponse = await axios.get(
         `https://archive-api.open-meteo.com/v1/archive`,
         {
@@ -66,7 +67,6 @@ export default function Home() {
         datasets: [{ data: climaData.daily.precipitation_sum }],
       });
 
-      // Buscar temperatura atual
       const climaAtualResponse = await axios.get(
         "https://api.open-meteo.com/v1/forecast",
         {
@@ -90,71 +90,44 @@ export default function Home() {
   }
 
   return (
-    <View style={styles.container}>
-      <View
-        style={{ width: "100%", alignItems: "center", flexDirection: "row" }}
-      >
-        <TextInput
-          mode="outlined"
-          label="Sua cidade"
-          value={city}
-          onChangeText={setCity}
-          style={styles.input}
-          activeOutlineColor="#004AAB"
-          placeholder="Digite a cidade em que reside"
-        />
-        <IconButton
-          icon="magnify"
-          iconColor="#fff"
-          size={26}
-          style={styles.button}
-          containerColor="#004AAB"
-          onPress={buscarDados}
-        />
+    <View style={stylesHome.container}>
+      <View style={stylesHome.header}>
+        <TouchableOpacity
+          style={stylesHome.notificationButton}
+          onPress={() => navigation.navigate("Notification")}
+        >
+          <Ionicons name="notifications" size={34} color="#e10000" />
+          <Text style={stylesHome.notificationText}>Notificações</Text>
+        </TouchableOpacity>
+
+        <View style={stylesHome.searchContainer}>
+          <TextInput
+            mode="outlined"
+            label="Sua cidade"
+            value={city}
+            onChangeText={setCity}
+            style={stylesHome.input}
+            activeOutlineColor="#004AAB"
+            placeholder="Digite a cidade em que reside"
+          />
+          <IconButton
+            icon="magnify"
+            iconColor="#fff"
+            size={26}
+            style={stylesHome.button}
+            containerColor="#004AAB"
+            onPress={buscarDados}
+          />
+        </View>
       </View>
 
       <Graph city={city} data={dadosChuva} error={error} loading={loading} />
 
-      <View
-        style={{
-          width: "100%",
-          flexDirection: "row",
-          justifyContent: "space-around",
-        }}
-      >
-        <View
-          style={{
-            alignItems: "center",
-            borderColor: "#004aab",
-            borderWidth: 2,
-            padding: 15,
-            borderRadius: 8,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 18,
-              fontFamily: "JosefinSans_400Regular",
-            }}
-          >
-            Temperatura
-          </Text>
-
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: 5,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 32,
-                fontFamily: "JosefinSans_400Regular",
-                marginRight: 6,
-              }}
-            >
+      <View style={stylesHome.infoRow}>
+        <View style={stylesHome.card}>
+          <Text style={stylesHome.cardTitle}>Temperatura</Text>
+          <View style={stylesHome.temperatureRow}>
+            <Text style={stylesHome.temperatureText}>
               {temperatura !== null ? `${temperatura}°C` : "--"}
             </Text>
             <Ionicons name="sunny" size={41} color="#ffa600" />
@@ -162,67 +135,17 @@ export default function Home() {
         </View>
 
         <TouchableOpacity
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            borderColor: "#004aab",
-            borderWidth: 2,
-            padding: 15,
-            borderRadius: 8,
-          }}
+          style={stylesHome.card}
+          onPress={() => navigation.navigate("Controls")}
         >
-          <Text
-            style={{
-              fontSize: 32,
-              fontFamily: "JosefinSans_400Regular",
-              marginRight: 6,
-            }}
-          >
-            Controles
-          </Text>
+          <Text style={stylesHome.controlesText}>Controles</Text>
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity
-        style={{
-          alignItems: "center",
-          borderColor: "#004aab",
-          borderWidth: 2,
-          padding: 20,
-          borderRadius: 8,
-          marginTop: 15,
-          width: "90%",
-          flexDirection: "row",
-          justifyContent: "center",
-          gap: 15,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 32,
-            fontFamily: "JosefinSans_400Regular",
-            marginRight: 6,
-          }}
-        >
-          Relatórios
-        </Text>
+      <TouchableOpacity style={stylesHome.reportButton}>
+        <Text style={stylesHome.relatoriosText}>Relatórios</Text>
         <Ionicons name="stats-chart" size={65} color="#004aab" />
       </TouchableOpacity>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: "#f0f0f0",
-  },
-  input: {
-    margin: 10,
-    width: "75%",
-  },
-  button: {
-    borderRadius: 8,
-  },
-});

@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Login() {
+export default async function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -26,6 +26,10 @@ export default function Login() {
   const [fontsLoaded] = useFonts({
     JosefinSans_400Regular,
   });
+  const token = await AsyncStorage.getItem("authToken");
+  if (token) {
+    navigation.navigate("Drawer");
+  }
 
   const handleLogin = async () => {
     if (!email || !password) {
