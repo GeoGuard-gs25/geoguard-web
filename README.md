@@ -9,8 +9,7 @@ Projeto desenvolvido para o **Global Solution** do curso de Análise e Desenvolv
 -  Rafael Souza Bezerra - 557888
 
 ## 📺 Apresentação em Vídeo
-Assista à nossa explicação completa sobre o projeto no YouTube:  
-🔗 [https://www.youtube.com/watch?v=SEU_VIDEO_ID](https://www.youtube.com/watch?v=SEU_VIDEO_ID)
+🔗 [https://www.youtube.com/watch?v=SEU_VIDEO_ID](https://youtu.be/408Xq1-1JX0?si=t7eCaQsjHk-0gKn9)
 
 ## 💡 Descrição da Solução
 
@@ -36,12 +35,9 @@ A proposta busca **democratizar o acesso à energia sustentável**, especialment
 
 #### 4. Aplicativo Mobile
 Desenvolvido em **React Native** ou **Flutter**, com:
-- Monitoramento em tempo real de geração e consumo.
 - Notificações automáticas (falhas, bateria baixa, intrusão).
-- Geolocalização das estações.
 - Controle remoto (ligar/desligar cargas).
 - Histórico de dados e relatórios interativos.
-- Suporte a múltiplos usuários com diferentes níveis de acesso.
 
 ### 🔄 Fluxo de Funcionamento
 1. Coleta de dados pelos sensores.
