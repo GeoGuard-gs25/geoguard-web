@@ -3,7 +3,6 @@
 Projeto desenvolvido para o **Global Solution** do curso de Análise e Desenvolvimento de Sistemas, com foco em sustentabilidade, energia limpa e tecnologias inteligentes.
 
 ## 🎓 Integrantes do Grupo
-- Guilherme Alves  
 -  Guilherme Alves Pedroso - RM555357
 -  João Vitor Silva Nascimento - RM554694
 -  Rafael Souza Bezerra - 557888
@@ -58,9 +57,3 @@ Desenvolvido em **React Native** ou **Flutter**, com:
 - Redução de custos com manutenção preditiva.
 - Segurança energética e física.
 - Aplicativo moderno e fácil de usar.
-- Escalabilidade para múltiplas estações.
-
----
-
-Desenvolvido com propósito, tecnologia e impacto sustentável.  
-**GeoGuard: Protegendo energia limpa em qualquer lugar.**
