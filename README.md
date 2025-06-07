@@ -8,7 +8,7 @@ Projeto desenvolvido para o **Global Solution** do curso de Análise e Desenvolv
 -  Rafael Souza Bezerra - 557888
 
 ## 📺 Apresentação em Vídeo
-🔗 [https://www.youtube.com/watch?v=SEU_VIDEO_ID](https://youtu.be/408Xq1-1JX0?si=t7eCaQsjHk-0gKn9)
+🔗 [Link do vídeo](https://youtu.be/408Xq1-1JX0?si=t7eCaQsjHk-0gKn9)
 
 ## 💡 Descrição da Solução
 
