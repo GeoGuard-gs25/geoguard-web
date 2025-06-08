@@ -10,6 +10,9 @@ Projeto desenvolvido para o **Global Solution** do curso de Análise e Desenvolv
 ## 📺 Apresentação em Vídeo
 🔗 [Link do vídeo](https://youtu.be/408Xq1-1JX0?si=t7eCaQsjHk-0gKn9)
 
+- 🎥 **Pitch GeoGuard:**
+-   [Link do pitch](https://youtu.be/P2tlEBYjZfE) 
+
 ## 💡 Descrição da Solução
 
 **GeoGuard** é uma solução inovadora que utiliza **estações móveis de geração de energia limpa** equipadas com sensores IoT, conectividade inteligente e um aplicativo mobile para monitoramento e controle remoto.
